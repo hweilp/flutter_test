@@ -1,10 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutterproject/api/api.dart';
+// import 'package:flutterproject/api/test.dart';
 // import 'package:carousel/carousel.dart';
 
 class MotherRingPage extends StatelessWidget {
   final _pageTitle = '妈妈圈';
+  void initState() {
+    // ApiInterface.apiTest();
+    ApiInterface.test().then((data) => {print(data)});
+    // Http.request('/test', 'get').then((data) => {print('data=== $data')});
+  }
+
+  void login() {
+    var data = {'userName': 'admin', 'password': '123456'};
+    ApiInterface.login(data)
+        .then((data) => {print(data)})
+        .catchError((onError) => {print(onError)});
+  }
+
+  void getList() {}
+
   @override
   Widget build(BuildContext context) {
+    // initState();
     return new Scaffold(
         appBar: AppBar(
           title: Text(_pageTitle),
@@ -35,9 +53,17 @@ class MotherRingPage extends StatelessWidget {
             // ),
             Text(_pageTitle),
             IconButton(
-              icon: Icon(Icons.accessible_forward),
+              icon: Icon(Icons.account_box),
+              onPressed: () {
+                print('23');
+                login();
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.access_time),
               onPressed: () {
                 print(' 正在打印 list 1');
+                initState();
               },
             )
           ],
