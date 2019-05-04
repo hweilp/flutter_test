@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterproject/compontents/loading.dart';
+import 'package:flutterproject/compontents/toast.dart';
 
 class YBLPage extends StatelessWidget {
   final _pageTitle = '雅布力';
@@ -64,7 +65,7 @@ class YBLPage extends StatelessWidget {
               ),
               new Center(
                 child: new FlatButton(
-                  child: Text('测试'),
+                  child: Text('toast'),
                   color: Color.fromRGBO(64, 158, 255, 1),
                   textColor: Color.fromRGBO(255, 255, 255, 1),
                   shape: RoundedRectangleBorder(
@@ -82,7 +83,7 @@ class YBLPage extends StatelessWidget {
   }
 
   void msgTips(BuildContext context) {
-    // showDialog(context: context, child: dialog);
+    Toast.toast(context, '显示弹窗toast');
   }
 
   void showAlterDialog(BuildContext context) {
@@ -122,28 +123,5 @@ class YBLPage extends StatelessWidget {
                 print(val);
               });
         });
-  }
-
-  void showAlertDialog(BuildContext context) {
-    // SimpleDialog AlertDialog
-    showDialog(
-        context: context,
-        builder: (_) => new AlertDialog(
-                title: new Text("对话框 标题"),
-                content: new Text("对话框 内容"),
-                actions: <Widget>[
-                  new FlatButton(
-                    child: new Text("取消"),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  new FlatButton(
-                    child: new Text("确定"),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  )
-                ]));
   }
 }
