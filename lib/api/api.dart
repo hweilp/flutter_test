@@ -10,18 +10,17 @@ import 'package:flutterproject/api/http.dart';
 
 class ApiInterface {
   // test
-  static test() async {
-    return Http.request('/test', 'get');
+  static test([dynamic data]) async {
+    return Http.request('/test', 'get', data);
   }
 
   // login
-  static Future<Map<String, dynamic>> login(data) async {
-    // print(data);
+  static login(data) async {
     return Http.request('/login', 'post', data);
   }
 
-  // apiTest
-  static Future<Map<String, dynamic>> apiTest([String url, data]) async {
-    return NetUtil.getJson('/test');
+  //userList
+  static userList([dynamic data]) async {
+    return Http.request('/personal', 'get', data);
   }
 }

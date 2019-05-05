@@ -6,19 +6,24 @@ import 'package:flutterproject/api/api.dart';
 class MotherRingPage extends StatelessWidget {
   final _pageTitle = '妈妈圈';
   void initState() {
+    var data = {'token': '232323'};
     // ApiInterface.apiTest();
-    ApiInterface.test().then((data) => {print(data)});
+    ApiInterface.test(data).then((data) => {print('data===$data')});
     // Http.request('/test', 'get').then((data) => {print('data=== $data')});
   }
 
   void login() {
     var data = {'userName': 'admin', 'password': '123456'};
+    var response;
     ApiInterface.login(data)
-        .then((data) => {print(data)})
+        .then((res) => {
+          response = res.data, print('code===$response')})
         .catchError((onError) => {print(onError)});
   }
 
-  void getList() {}
+  void getList() {
+    ApiInterface.userList().then((data) => {print('userlist === $data')});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +58,7 @@ class MotherRingPage extends StatelessWidget {
             // ),
             Text(_pageTitle),
             IconButton(
-              icon: Icon(Icons.account_box),
+              icon: Icon(Icons.work),
               onPressed: () {
                 print('23');
                 login();
@@ -62,8 +67,13 @@ class MotherRingPage extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.access_time),
               onPressed: () {
-                print(' 正在打印 list 1');
                 initState();
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.list),
+              onPressed: () {
+                getList();
               },
             )
           ],

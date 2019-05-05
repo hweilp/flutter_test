@@ -15,9 +15,26 @@ class Http {
       receiveTimeout: 5000,
       followRedirects: true));
 
+  // static getToken() async {
+  //   //  String token = await LocalStorage.get(LocalStorage.TOKEN_KEY);
+  //   String token = '';
+  //   return token;
+  // }
+
   // request fun
   static request(String uri, String method,
       [Map<String, Object> params, dataIsJson = false]) {
+    // 拦截token
+    // _dio.interceptors.add(InterceptorsWrapper(onRequest: (Options options) {
+    //   var authToken = getToken();
+    //   options.headers["auth_token"] = authToken;
+    //   // if (authTokenFlag) {
+    //   //   options.headers["auth_token"] = authToken;
+    //   // } else {
+    //   //   options.headers["auth_token"] = null;
+    //   // }
+    //   return options;
+    // }));
     Options op;
     if (dataIsJson) {
       op = new Options(contentType: ContentType.parse("application/json"));
@@ -27,8 +44,14 @@ class Http {
     }
 
     op.method = method;
+    print('uri====$uri');
     print('params====$params');
-    return _dio.request<Map<String, dynamic>>(uri, data: params, options: op);
+    if (method == 'get') {
+      return _dio.request<Map<String, dynamic>>(uri,
+          queryParameters: params, options: op);
+    } else {
+      return _dio.request<Map<String, dynamic>>(uri, data: params, options: op);
+    }
   }
 }
 
