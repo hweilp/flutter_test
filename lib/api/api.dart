@@ -28,4 +28,9 @@ class ApiInterface {
   static userList([dynamic data]) async {
     return Http.request('/personal', 'get', data);
   }
+
+  // getVipBanner
+  static getVipBanner() async {
+    return Http.request('/vip_banner_list', 'get');
+  }
 }

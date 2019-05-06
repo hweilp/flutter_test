@@ -108,6 +108,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutterproject/page/index.dart';
+import 'package:flutterproject/page/login/index.dart';
 
 void main() => runApp(MyApp());
 
@@ -120,7 +121,9 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primaryColor: Colors.white,
         ),
-        routes: {},
+        routes: {
+          '/login':(_) => new LoginPage(),
+        },
         home: HomePage());
   }
 }
