@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterproject/api/api.dart';
+import 'package:flutterproject/util/sharedPreferences.dart';
 import 'package:flutterproject/compontents/toast.dart';
 
 class LoginPage extends StatefulWidget {
@@ -15,17 +16,29 @@ class _LoginPage extends State<LoginPage> {
   final TextEditingController passwordController = new TextEditingController();
 
   void login() async {
+    var userName = accountController.text;
+    var password = passwordController.text;
+    print('userName===$userName, password===$password');
+    if (userName == null || userName == '') {
+      Toast.toast(context, '请输入账号');
+      return;
+    }
+    if (password == null || password == '') {
+      Toast.toast(context, '请输入密码');
+      return;
+    }
     var data = {
-      'userName': accountController.text,
-      'password': passwordController.text,
+      'userName': userName,
+      'password': password,
     };
     ApiInterface.login(data).then((res) {
       var msg = '账号密码错误';
       // var code = res.code;
       var code = 2001;
       print('res====$res, msg===$msg, code=$code');
+      Shared.sharedSaveString('auth_token', 'vavadfadfadsfa');
       Toast.toast(context, msg);
-    });
+    }).catchError((onError) => {Toast.toast(context, '网络异常')});
   }
 
   @override
