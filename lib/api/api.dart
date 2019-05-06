@@ -19,6 +19,11 @@ class ApiInterface {
     return Http.request('/login', 'post', data);
   }
 
+  // loginout
+  static loginout() async {
+    return Http.request('/loginout', 'get');
+  }
+
   //userList
   static userList([dynamic data]) async {
     return Http.request('/personal', 'get', data);

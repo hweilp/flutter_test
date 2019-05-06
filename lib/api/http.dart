@@ -1,6 +1,9 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+// import 'dart:convert';
+// import 'package:flutterproject/util/sharedPreferences.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Http {
   // host
@@ -14,38 +17,46 @@ class Http {
       connectTimeout: 5000,
       receiveTimeout: 5000,
       followRedirects: true));
+  static var authToken = '';
 
-  // static getToken() async {
-  //   //  String token = await LocalStorage.get(LocalStorage.TOKEN_KEY);
-  //   String token = '';
-  //   return token;
-  // }
+  // getToken
+  getToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    authToken = prefs.getString('auth_token');
+  }
 
   // request fun
   static request(String uri, String method,
-      [Map<String, Object> params, dataIsJson = false]) {
-    // 拦截token
-    // _dio.interceptors.add(InterceptorsWrapper(onRequest: (Options options) {
-    //   var authToken = getToken();
-    //   options.headers["auth_token"] = authToken;
-    //   // if (authTokenFlag) {
-    //   //   options.headers["auth_token"] = authToken;
-    //   // } else {
-    //   //   options.headers["auth_token"] = null;
-    //   // }
-    //   return options;
-    // }));
+      [Map<String, Object> params]) async {
+    // 请求拦截token
+    _dio.interceptors.add(InterceptorsWrapper(onRequest: (Options options) {
+      if (authToken == null) {
+        options.headers['auth_token'] = '';
+      } else {
+        options.headers['auth_token'] = authToken;
+      }
+
+      return options;
+    }));
+
+    // 响应拦截token
+    _dio.interceptors.add(InterceptorsWrapper(onResponse: (Response response) {
+      var data = response.data;
+      var statusCode = response.statusCode;
+      if (statusCode == 200) {
+        return data;
+      } else {
+        var errData = '网络异常';
+        return errData;
+      }
+    }));
+
     Options op;
-    if (dataIsJson) {
-      op = new Options(contentType: ContentType.parse("application/json"));
-    } else {
-      op = new Options(
-          contentType: ContentType.parse("application/x-www-form-urlencoded"));
-    }
+    op = new Options();
 
     op.method = method;
-    print('uri====$uri');
-    print('params====$params');
+    // print('uri====$uri');
+    // print('params====$params');
     if (method == 'get') {
       return _dio.request<Map<String, dynamic>>(uri,
           queryParameters: params, options: op);
