@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 // import 'dart:convert';
-// import 'package:flutterproject/util/sharedPreferences.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,25 +16,23 @@ class Http {
       connectTimeout: 5000,
       receiveTimeout: 5000,
       followRedirects: true));
-  static var authToken = '';
-
-  // getToken
-  getToken() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    authToken = prefs.getString('auth_token');
-  }
+  // static var authToken = '';
 
   // request fun
   static request(String uri, String method,
       [Map<String, Object> params]) async {
-    // 请求拦截token
+    // 获取token
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var authToken = prefs.getString('auth_token');
+    print('auth---Token====$authToken');
+    // 请求拦截 token
     _dio.interceptors.add(InterceptorsWrapper(onRequest: (Options options) {
+      // print('authToken===$authToken');
       if (authToken == null) {
         options.headers['auth_token'] = '';
       } else {
         options.headers['auth_token'] = authToken;
       }
-
       return options;
     }));
 

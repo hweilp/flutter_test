@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterproject/api/api.dart';
-// import 'package:flutterproject/util/sharedPreferences.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutterproject/util/sharedPreferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 class MotherRingPage extends StatefulWidget {
   @override
@@ -11,18 +11,6 @@ class MotherRingPage extends StatefulWidget {
 class _MotherRingPageState extends State {
   var _pageTitle = '妈妈圈';
   var userName = '';
-  final String authToken = '';
-
-  Future preferencesSave(String key, String value) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString(key, value);
-  }
-
-  Future preferencesClear() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.clear();
-  }
-
   void init() {
     var data = {'token': '232323'};
     ApiInterface.test(data).then((data) => {print('data===$data')});
@@ -30,15 +18,18 @@ class _MotherRingPageState extends State {
 
   void loginout() {
     ApiInterface.loginout().then((data) {
-      preferencesClear();
+      setState(() {
+        userName = '';
+      });
+      Shared.sharedClear();
     });
   }
 
-  void login() async {
+  login() async {
     var data = {'userName': 'admin', 'password': '123456'};
     // var authToken = '223232323userName';
-    preferencesSave('auth_token', 'vavadfadfadsfa');
     ApiInterface.login(data).then((res) {
+      Shared.sharedSaveString('auth_token', 'vavadfadfadsfa');
       setState(() {
         userName = data['userName'];
       });
@@ -81,24 +72,28 @@ class _MotherRingPageState extends State {
             // ),
             Text(_pageTitle),
             Text('用户名：$userName'),
+            Text('登录'),
             IconButton(
               icon: Icon(Icons.work),
               onPressed: () {
                 login();
               },
             ),
+            Text('测试'),
             IconButton(
               icon: Icon(Icons.access_time),
               onPressed: () {
                 init();
               },
             ),
+            Text('获取列表'),
             IconButton(
               icon: Icon(Icons.list),
               onPressed: () {
                 getList();
               },
             ),
+            Text('退出'),
             IconButton(
               icon: Icon(Icons.local_gas_station),
               onPressed: () {
