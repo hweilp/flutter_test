@@ -1,10 +1,12 @@
 // import 'dart:io';
+
 // import 'dart:convert';
 // import 'package:flutter/cupertino.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Http {
+  static final debug = true;
   // host
   static final host = 'http://127.0.0.1:8080';
   // api 组合
@@ -37,7 +39,7 @@ class Http {
 
     // 响应拦截token
     _dio.interceptors.add(InterceptorsWrapper(onResponse: (Response response) {
-      var data = response.data;
+      var data = response;
       // print('data===$data');
       var statusCode = response.statusCode;
       if (statusCode == 200) {
@@ -182,7 +184,7 @@ class Http {
 //   }
 
 //   /// 对请求返回的数据进行统一的处理
-//   /// 如果成功则将我们需要的数据返回出去，否则进异常处理方法，返回异常信息
+//   /// 如果成功则将我们需要的数据返回出去，否则进异常处理方法���返回异常信息
 //   static Future<T> logicalErrorTransform<T>(
 //       Response<Map<String, dynamic>> resp) {
 //     // print(resp);

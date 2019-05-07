@@ -13,7 +13,7 @@ class VIPPage extends StatefulWidget {
   State<StatefulWidget> createState() => new VIPPageState();
 }
 
-class VIPPageState extends State<VIPPage> with WidgetsBindingObserver {
+class VIPPageState extends State<VIPPage> {
   final _pageTitle = 'VIP';
   int count = 1;
 
@@ -22,23 +22,8 @@ class VIPPageState extends State<VIPPage> with WidgetsBindingObserver {
     // 整个App初始化
     print('initState');
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
+    getBanner();
   }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    print('didChangeDependencies');
-  }
-  // @override
-  // void didUpdateWidget(VIPPage oldWidget) {
-  //   // 每个页面变动执行
-  //   print('didUpdateWidget===$oldWidget');
-  //   super.didUpdateWidget(oldWidget);
-  //   // if (oldWidget != VIPPage) {
-  //   //   print(oldWidget);
-  //   // }
-  // }
 
   void changeState() {
     setState(() {

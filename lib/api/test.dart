@@ -6,7 +6,7 @@ import 'package:dio/dio.dart';
 //   return response;
 // }
 
-class Http {
+class HttpTest {
   static final host = 'http://127.0.0.1:8080';
 
   static BaseOptions options = new BaseOptions(
@@ -18,6 +18,11 @@ class Http {
   static Dio dio = new Dio(options);
 
   // dio.interceptors.add()
+
+  static postData(String uri, data) async {
+    var response = await dio.post(uri, data: data);
+    return response;
+  }
 
   static request(String uri, String method,
       [Map<String, dynamic> data, bool dataIsJson = true]) async {
