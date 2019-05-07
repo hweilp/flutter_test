@@ -109,6 +109,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterproject/page/index.dart';
 import 'package:flutterproject/page/login/index.dart';
+import 'package:flutterproject/page/register/index.dart';
 import 'package:flutterproject/page/personal/index.dart';
 
 void main() => runApp(MyApp());
@@ -124,6 +125,7 @@ class MyApp extends StatelessWidget {
         ),
         routes: {
           '/login': (_) => new LoginPage(),
+          '/register': (_) => new RegisterPage(),
           '/mine': (_) => new PersonalPage(),
         },
         home: HomePage());

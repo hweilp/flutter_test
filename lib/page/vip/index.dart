@@ -17,19 +17,6 @@ class VIPPageState extends State<VIPPage> {
   @override
   void initState() {
     // 整个App初始化
-    // imageList
-    //   ..add(Image.network(
-    //     'http://pic1.win4000.com/wallpaper/9/5450ae2fdef8a.jpg',
-    //     fit: BoxFit.fill,
-    //   ))
-    //   ..add(Image.network(
-    //     'http://pic1.win4000.com/wallpaper/9/5450ae2fdef8a.jpg',
-    //     fit: BoxFit.fill,
-    //   ))
-    //   ..add(Image.network(
-    //     'http://pic1.win4000.com/wallpaper/9/5450ae2fdef8a.jpg',
-    //     fit: BoxFit.fill,
-    //   ));
     getBanner();
     super.initState();
   }

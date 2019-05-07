@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
+// import 'package:flutter_swiper/flutter_swiper.dart';
 
 class PersonalPage extends StatefulWidget {
   @override
@@ -11,34 +11,65 @@ class PersonalPageState extends State<PersonalPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('我的'),
+        title: Text(
+          '我的',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.blue,
       ),
       body: Container(
           width: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.all(10.0),
           height: 200.0,
-          child: Swiper(
-            itemBuilder: _swiperBuilder,
-            itemCount: 3,
-            pagination: new SwiperPagination(
-                builder: DotSwiperPaginationBuilder(
-              color: Colors.black54,
-              activeColor: Colors.white,
-            )),
-            // control: new SwiperControl(),
-            scrollDirection: Axis.horizontal,
-            autoplay: true,
-            autoplayDelay: 5000,
-            onTap: (index) {
-              print(index);
-            },
+          child: new Column(
+            children: <Widget>[_mineTop(context)],
           )),
     );
   }
 
-  Widget _swiperBuilder(BuildContext context, int index) {
-    return (Image.network(
-      'http://pic1.win4000.com/wallpaper/9/5450ae2fdef8a.jpg',
-      fit: BoxFit.fill,
-    ));
+  Widget _mineTop(BuildContext context) {
+    return new Container(
+      height: 130,
+      decoration: new BoxDecoration(
+        borderRadius: BorderRadius.circular(3.0),
+        boxShadow: <BoxShadow>[
+          new BoxShadow(
+            offset: Offset(1.2, 1.2),
+            color: Color.fromRGBO(165, 165, 165, .1),
+            spreadRadius: 1.5,
+          )
+        ],
+      ),
+      child: new Container(
+        color: Colors.white,
+        child: new Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            FlatButton(
+              child: Text(
+                '注册',
+                style: TextStyle(fontSize: 24, color: Colors.black),
+              ),
+              onPressed: () {
+                Navigator.of(context).pushNamed('/register');
+              },
+            ),
+            Text(
+              '|',
+              style: TextStyle(fontSize: 24, color: Colors.black),
+            ),
+            FlatButton(
+              child: Text(
+                '登录',
+                style: TextStyle(fontSize: 24, color: Colors.black),
+              ),
+              onPressed: () {
+                Navigator.of(context).pushNamed('/login');
+              },
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
