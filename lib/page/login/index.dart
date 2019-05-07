@@ -18,7 +18,7 @@ class _LoginPage extends State<LoginPage> {
   void login() async {
     var userName = accountController.text;
     var password = passwordController.text;
-    print('userName===$userName, password===$password');
+    // print('userName===$userName, password===$password');
     if (userName == null || userName == '') {
       Toast.toast(context, '请输入账号');
       return;
@@ -31,22 +31,23 @@ class _LoginPage extends State<LoginPage> {
       'userName': userName,
       'password': password,
     };
-    ApiInterface.login(data).then((res) {
-      // Navigator.pop(context);
-      // Navigator.of(context).pushNamed('/');
-      // 返回给上一个页面
-      Navigator.of(context).pop();
-      var msg = '账号密码错误';
-      print('res====$res');
-
-      // var codes = res['code'];
-      // print('res====$res, msg===$msg, codes===$codes');
-      var code = 2001;
-      print('res====$res, msg===$msg, code=$code');
-      Shared.sharedSaveString('auth_token', 'vavadfadfadsfa');
-      Toast.toast(context, msg);
+    var resultData = await ApiInterface.login(data).then((res) {
+      return res.data;
     });
-    // .catchError((onError) => {Toast.toast(context, '网络异常')});
+    var code = resultData['code'];
+    var message = resultData['msg'];
+    var authToken = resultData['data']['auth_token'];
+    var resultUserName = resultData['data']['userName'];
+    if (code == 2000) {
+      Shared.sharedSaveString('auth_token', authToken);
+      Shared.sharedSaveString('user_name', resultUserName);
+      Toast.toast(context, message);
+      Navigator.of(context).pushNamed('/mine');
+      // mine
+      // Navigator.of(context).pop();
+    } else {
+      Toast.toast(context, message);
+    }
   }
 
   @override

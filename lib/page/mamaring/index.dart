@@ -59,47 +59,36 @@ class _MotherRingPageState extends State {
           crossAxisAlignment: CrossAxisAlignment.start,
           verticalDirection: VerticalDirection.down,
           children: <Widget>[
-            // new SizedBox(
-            //   height: 240.0,
-            //   child: new Carousel(
-            //     children: [
-            //       new NetworkImage(
-            //           'https://pbs.twimg.com/profile_images/760249570085314560/yCrkrbl3_400x400.jpg'),
-            //       new NetworkImage(
-            //           'https://webinerds.com/app/uploads/2017/11/d49396_d9c5d967608d4bc1bcf09c9574eb67c9-mv2.png')
-            //     ].map((netImage) => new Image(image: netImage)).toList(),
-            //   ),
-            // ),
             Text(_pageTitle),
-            Text('用户名：$userName'),
-            Text('登录'),
-            IconButton(
-              icon: Icon(Icons.work),
-              onPressed: () {
-                login();
-              },
-            ),
-            Text('测试'),
-            IconButton(
-              icon: Icon(Icons.access_time),
-              onPressed: () {
-                init();
-              },
-            ),
-            Text('获取列表'),
-            IconButton(
-              icon: Icon(Icons.list),
-              onPressed: () {
-                getList();
-              },
-            ),
-            Text('退出'),
-            IconButton(
-              icon: Icon(Icons.local_gas_station),
-              onPressed: () {
-                loginout();
-              },
-            ),
+            // Text('用户名：$userName'),
+            // Text('登录'),
+            // IconButton(
+            //   icon: Icon(Icons.work),
+            //   onPressed: () {
+            //     login();
+            //   },
+            // ),
+            // Text('测试'),
+            // IconButton(
+            //   icon: Icon(Icons.access_time),
+            //   onPressed: () {
+            //     init();
+            //   },
+            // ),
+            // Text('获取列表'),
+            // IconButton(
+            //   icon: Icon(Icons.list),
+            //   onPressed: () {
+            //     getList();
+            //   },
+            // ),
+            // Text('退出'),
+            // IconButton(
+            //   icon: Icon(Icons.local_gas_station),
+            //   onPressed: () {
+            //     loginout();
+            //   },
+            // ),
           ],
         ));
   }

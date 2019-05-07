@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutterproject/api/api.dart';
+// import 'package:dio/dio.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 
 class VIPPage extends StatefulWidget {
-  // static getBaner() async {
-  //   var data = await ApiInterface.getVipBanner().then((res) {
-  //     return res.data;
-  //   });
-  //   print('data===$data');
-  // }
-
   @override
   State<StatefulWidget> createState() => new VIPPageState();
 }
@@ -16,31 +11,56 @@ class VIPPage extends StatefulWidget {
 class VIPPageState extends State<VIPPage> {
   final _pageTitle = 'VIP';
   int count = 1;
+  var result = {};
+  List<Widget> imageList = List();
 
   @override
   void initState() {
     // 整个App初始化
-    print('initState');
-    super.initState();
+    // imageList
+    //   ..add(Image.network(
+    //     'http://pic1.win4000.com/wallpaper/9/5450ae2fdef8a.jpg',
+    //     fit: BoxFit.fill,
+    //   ))
+    //   ..add(Image.network(
+    //     'http://pic1.win4000.com/wallpaper/9/5450ae2fdef8a.jpg',
+    //     fit: BoxFit.fill,
+    //   ))
+    //   ..add(Image.network(
+    //     'http://pic1.win4000.com/wallpaper/9/5450ae2fdef8a.jpg',
+    //     fit: BoxFit.fill,
+    //   ));
     getBanner();
-  }
-
-  void changeState() {
-    setState(() {
-      count = 2;
-    });
+    super.initState();
   }
 
   void getBanner() async {
     var data = await ApiInterface.getVipBanner().then((res) {
       return res.data;
     });
+    var code = data['code'];
+    // var dataBase = data['data'];
+    if (code == 2000) {
+      setState(() {
+        // imageList = dataBase['list'];
+      });
+    }
     print('data===$data');
+  }
+
+  // Widget _swiperBuilder(BuildContext context, int index) {
+  //   return (imageList[index]);
+  // }
+
+  Widget _swiperBuilder(BuildContext context, int index) {
+    return (Image.network(
+      'http://pic1.win4000.com/wallpaper/9/5450ae2fdef8a.jpg',
+      fit: BoxFit.fill,
+    ));
   }
 
   @override
   Widget build(BuildContext context) {
-    // getBanner();
     return new Scaffold(
         appBar: AppBar(
           title: Text(_pageTitle),
@@ -57,31 +77,22 @@ class VIPPageState extends State<VIPPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           verticalDirection: VerticalDirection.down,
           children: <Widget>[
-            Text(_pageTitle),
-            Text(count.toString()),
-            // Int(count),
-            IconButton(
-              icon: Icon(Icons.accessible_forward),
-              onPressed: () {
-                changeState();
-                print(' 正在打印 list 1');
-              },
-            ),
-            Text('getbanner'),
-            IconButton(
-              icon: Icon(Icons.accessible_forward),
-              onPressed: () {
-                getBanner();
-                print(' 正在打印 list 1');
-              },
-            ),
-            IconButton(
-              tooltip: 'login',
-              icon: Icon(Icons.accessible_forward),
-              onPressed: () {
-                Navigator.of(context).pushNamed('/login');
-              },
-            )
+            Container(
+                width: MediaQuery.of(context).size.width,
+                height: 200.0,
+                child: new Swiper(
+                  itemCount: 3,
+                  itemBuilder: _swiperBuilder,
+                  pagination: SwiperPagination(
+                      alignment: Alignment.bottomRight,
+                      margin: const EdgeInsets.fromLTRB(0, 0, 20, 10),
+                      builder: DotSwiperPaginationBuilder(
+                          color: Colors.black54, activeColor: Colors.white)),
+                  controller: SwiperController(),
+                  scrollDirection: Axis.horizontal,
+                  autoplay: true,
+                  onTap: (index) => print('点击了第$index'),
+                )),
           ],
         ));
   }

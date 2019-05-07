@@ -76,7 +76,13 @@ class YBLPage extends StatelessWidget {
                     msgTips(context);
                   },
                 ),
-              )
+              ),
+              RaisedButton(
+                child: Text('去登录'),
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/login');
+                },
+              ),
             ],
           ),
         ));
