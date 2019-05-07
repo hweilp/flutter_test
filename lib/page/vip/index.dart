@@ -39,24 +39,16 @@ class VIPPageState extends State<VIPPage> {
       return res.data;
     });
     var code = data['code'];
-    // var dataBase = data['data'];
     if (code == 2000) {
-      setState(() {
-        // imageList = dataBase['list'];
+      var dataList = data['data']['list'];
+      dataList.forEach((item) {
+        imageList.add(Image.network(item['url'], fit: BoxFit.fill));
       });
     }
-    print('data===$data');
   }
 
-  // Widget _swiperBuilder(BuildContext context, int index) {
-  //   return (imageList[index]);
-  // }
-
   Widget _swiperBuilder(BuildContext context, int index) {
-    return (Image.network(
-      'http://pic1.win4000.com/wallpaper/9/5450ae2fdef8a.jpg',
-      fit: BoxFit.fill,
-    ));
+    return (imageList[index]);
   }
 
   @override
@@ -93,6 +85,12 @@ class VIPPageState extends State<VIPPage> {
                   autoplay: true,
                   onTap: (index) => print('点击了第$index'),
                 )),
+            // RaisedButton(
+            //   child: Text('获取banner'),
+            //   onPressed: () {
+            //     getBanner();
+            //   },
+            // )
           ],
         ));
   }
