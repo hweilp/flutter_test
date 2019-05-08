@@ -8,7 +8,7 @@ class Shared {
 
   static sharedGetString(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var value = prefs.getString('auth_token');
+    var value = prefs.getString(key);
     return value;
   }
 

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:flutterproject/api/api.dart';
+import 'package:flutterproject/util/sharedPreferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 class PersonalPage extends StatefulWidget {
   @override
@@ -7,14 +9,84 @@ class PersonalPage extends StatefulWidget {
 }
 
 class PersonalPageState extends State<PersonalPage> {
+  String userName = '';
+  String userAvatar = '';
+  // AppState appState;
+  @override
+  void initState() {
+    getUserInfo();
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    getUserInfo();
+    super.didChangeDependencies();
+  }
+
+  void getUserInfo() async {
+    String sharedUserName = await Shared.sharedGetString('user_name');
+    String sharedUserAvatar = await Shared.sharedGetString('user_avatar');
+
+    if (sharedUserName != null || sharedUserName != 'null') {
+      setState(() {
+        userName = sharedUserName;
+        userAvatar = sharedUserAvatar;
+      });
+    }
+  }
+
+  void loginout() {
+    ApiInterface.loginout().then((data) {
+      setState(() {
+        userName = '';
+        userAvatar = '';
+      });
+      Shared.sharedClear();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        // leading: new RaisedButton(
+        //   onPressed: () {
+        //     print('leading');
+        //   },
+        //   child: new Icon(Icons.local_cafe),
+        //   textColor: Colors.white,
+        //   color: Color.fromRGBO(2, 2, 2, 0),
+        //   elevation: 0.0,
+        //   disabledElevation: 0.0,
+        //   highlightElevation: 0.0,
+        //   // colorBrightness: Brightness.light,
+        //   // splashColor: Colors.red,
+        //   padding: const EdgeInsets.all(5.0),
+        // ),
         title: Text(
           '我的',
           style: TextStyle(color: Colors.white),
         ),
+        centerTitle: true,
+        actions: <Widget>[
+          new Container(
+            width: 50.0,
+            margin: const EdgeInsets.only(
+              left: 5.0,
+              right: 5.0,
+            ),
+            alignment: Alignment.center,
+            child: new IconButton(
+              icon: new Image.asset('assets/images/login_out.png',
+                  width: 24.0, height: 24.0, repeat: ImageRepeat.repeat),
+              color: Colors.white,
+              onPressed: () {
+                loginout();
+              },
+            ),
+          ),
+        ],
         backgroundColor: Colors.blue,
       ),
       body: SingleChildScrollView(
@@ -31,6 +103,40 @@ class PersonalPageState extends State<PersonalPage> {
   }
 
   Widget _mineTop(BuildContext context) {
+    if (userName != '') {
+      return new Container(
+        height: 100,
+        margin: EdgeInsets.only(top: 0, right: 0, bottom: 15, left: 0),
+        decoration: new BoxDecoration(
+          borderRadius: BorderRadius.circular(3.0),
+          boxShadow: <BoxShadow>[
+            new BoxShadow(
+              offset: Offset(1.2, 1.2),
+              color: Color.fromRGBO(165, 165, 165, .1),
+              spreadRadius: 1.5,
+            )
+          ],
+        ),
+        child: Container(
+          color: Colors.white,
+          padding: EdgeInsets.all(10),
+          child: Center(
+              child: Flex(
+            direction: Axis.horizontal,
+            children: <Widget>[
+              Expanded(
+                flex: 3,
+                child: new Text(userName, style: TextStyle(fontSize: 18, color: Colors.black),),
+              ),
+              Expanded(
+                flex: 1,
+                child: new Image.network(userAvatar),
+              )
+            ],
+          )),
+        ),
+      );
+    }
     return new Container(
       margin: EdgeInsets.only(top: 0, right: 0, bottom: 15, left: 0),
       decoration: new BoxDecoration(
@@ -79,7 +185,6 @@ class PersonalPageState extends State<PersonalPage> {
 
   Widget _orderInfo(BuildContext context) {
     return new Container(
-      // height: 120,
       width: MediaQuery.of(context).size.width,
       decoration: new BoxDecoration(
         borderRadius: BorderRadius.circular(3.0),

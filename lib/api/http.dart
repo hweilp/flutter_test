@@ -23,7 +23,7 @@ class Http {
   static request(String uri, String method,
       [Map<String, Object> params]) async {
     // 获取token
-    print('http===$params');
+    // print('http===$params');
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var authToken = prefs.getString('auth_token');
     // 请求拦截 token

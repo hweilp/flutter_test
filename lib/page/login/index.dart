@@ -38,13 +38,15 @@ class _LoginPage extends State<LoginPage> {
     var message = resultData['msg'];
     var authToken = resultData['data']['auth_token'];
     var resultUserName = resultData['data']['userName'];
+    var resultUserAvatar = resultData['data']['userAvatar'];
     if (code == 2000) {
       Shared.sharedSaveString('auth_token', authToken);
       Shared.sharedSaveString('user_name', resultUserName);
+      Shared.sharedSaveString('user_avatar', resultUserAvatar);
       Toast.toast(context, message);
-      Navigator.of(context).pushNamed('/mine');
       // mine
-      // Navigator.of(context).pop();
+      // Navigator.of(context).pushNamed('/mine');
+      Navigator.of(context).pop();
     } else {
       Toast.toast(context, message);
     }
