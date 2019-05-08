@@ -10,7 +10,8 @@ class PersonalPage extends StatefulWidget {
 
 class PersonalPageState extends State<PersonalPage> {
   String userName = '';
-  String userAvatar = '';
+  // String userAvatar = '';
+  String userAvatar = 'http://127.0.0.1:8080/static/images/3.png';
   // AppState appState;
   @override
   void initState() {
@@ -27,8 +28,7 @@ class PersonalPageState extends State<PersonalPage> {
   void getUserInfo() async {
     String sharedUserName = await Shared.sharedGetString('user_name');
     String sharedUserAvatar = await Shared.sharedGetString('user_avatar');
-
-    if (sharedUserName != null || sharedUserName != 'null') {
+    if (sharedUserName != null && sharedUserName != 'null') {
       setState(() {
         userName = sharedUserName;
         userAvatar = sharedUserAvatar;
@@ -126,61 +126,73 @@ class PersonalPageState extends State<PersonalPage> {
             children: <Widget>[
               Expanded(
                 flex: 3,
-                child: new Text(userName, style: TextStyle(fontSize: 18, color: Colors.black),),
+                child: new Text(
+                  userName,
+                  style: TextStyle(fontSize: 18, color: Colors.black),
+                ),
               ),
               Expanded(
                 flex: 1,
                 child: new Image.network(userAvatar),
+                // child: new Image.network(userAvatar),
+                // child: new Row(
+                //   children: <Widget>[
+                //     Image.network(userAvatar),
+                //     // Image.asset('assets/images/login_out.png',
+                //     //     width: 24.0, height: 24.0, repeat: ImageRepeat.noRepeat)
+                //   ],
+                // ),
               )
             ],
           )),
         ),
       );
-    }
-    return new Container(
-      margin: EdgeInsets.only(top: 0, right: 0, bottom: 15, left: 0),
-      decoration: new BoxDecoration(
-        borderRadius: BorderRadius.circular(3.0),
-        boxShadow: <BoxShadow>[
-          new BoxShadow(
-            offset: Offset(1.2, 1.2),
-            color: Color.fromRGBO(165, 165, 165, .1),
-            spreadRadius: 1.5,
-          )
-        ],
-      ),
-      child: new Container(
-        height: 130,
-        color: Colors.white,
-        child: new Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            FlatButton(
-              child: Text(
-                '注册',
-                style: TextStyle(fontSize: 24, color: Colors.black),
-              ),
-              onPressed: () {
-                Navigator.of(context).pushNamed('/register');
-              },
-            ),
-            Text(
-              '|',
-              style: TextStyle(fontSize: 24, color: Colors.black),
-            ),
-            FlatButton(
-              child: Text(
-                '登录',
-                style: TextStyle(fontSize: 24, color: Colors.black),
-              ),
-              onPressed: () {
-                Navigator.of(context).pushNamed('/login');
-              },
-            ),
+    } else {
+      return new Container(
+        margin: EdgeInsets.only(top: 0, right: 0, bottom: 15, left: 0),
+        decoration: new BoxDecoration(
+          borderRadius: BorderRadius.circular(3.0),
+          boxShadow: <BoxShadow>[
+            new BoxShadow(
+              offset: Offset(1.2, 1.2),
+              color: Color.fromRGBO(165, 165, 165, .1),
+              spreadRadius: 1.5,
+            )
           ],
         ),
-      ),
-    );
+        child: new Container(
+          height: 130,
+          color: Colors.white,
+          child: new Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              FlatButton(
+                child: Text(
+                  '注册',
+                  style: TextStyle(fontSize: 24, color: Colors.black),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/register');
+                },
+              ),
+              Text(
+                '|',
+                style: TextStyle(fontSize: 24, color: Colors.black),
+              ),
+              FlatButton(
+                child: Text(
+                  '登录',
+                  style: TextStyle(fontSize: 24, color: Colors.black),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/login');
+                },
+              ),
+            ],
+          ),
+        ),
+      );
+    }
   }
 
   Widget _orderInfo(BuildContext context) {
