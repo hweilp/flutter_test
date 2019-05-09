@@ -10,9 +10,7 @@ class PersonalPage extends StatefulWidget {
 
 class PersonalPageState extends State<PersonalPage> {
   String userName = '';
-  // String userAvatar = '';
   String userAvatar = 'http://127.0.0.1:8080/static/images/3.png';
-  // AppState appState;
   @override
   void initState() {
     getUserInfo();
@@ -195,6 +193,15 @@ class PersonalPageState extends State<PersonalPage> {
     }
   }
 
+  void goToOrderList([int type]) {
+    print('199 type == $type');
+    if (userName == '') {
+      Navigator.of(context).pushNamed('/login');
+    } else {
+      Navigator.of(context).pushNamed('/order_list');
+    }
+  }
+
   Widget _orderInfo(BuildContext context) {
     return new Container(
       width: MediaQuery.of(context).size.width,
@@ -241,6 +248,7 @@ class PersonalPageState extends State<PersonalPage> {
                           ),
                           onTap: () {
                             print('查看更多GestureDetector');
+                            goToOrderList();
                           },
                         ),
                       ],
@@ -260,6 +268,7 @@ class PersonalPageState extends State<PersonalPage> {
                   child: new GestureDetector(
                     onTap: () {
                       print('待付款');
+                      goToOrderList(1);
                     },
                     child: Container(
                       child: new Center(
@@ -281,6 +290,7 @@ class PersonalPageState extends State<PersonalPage> {
                   child: new GestureDetector(
                     onTap: () {
                       print('待发货');
+                      goToOrderList(2);
                     },
                     child: Container(
                       child: new Center(
@@ -302,6 +312,7 @@ class PersonalPageState extends State<PersonalPage> {
                   child: new GestureDetector(
                     onTap: () {
                       print('待收货');
+                      goToOrderList(3);
                     },
                     child: Container(
                       child: new Center(
@@ -323,6 +334,7 @@ class PersonalPageState extends State<PersonalPage> {
                   child: new GestureDetector(
                     onTap: () {
                       print('待评价');
+                      goToOrderList(4);
                     },
                     child: Container(
                       child: new Center(
@@ -344,6 +356,7 @@ class PersonalPageState extends State<PersonalPage> {
                   child: new GestureDetector(
                     onTap: () {
                       print('退款/售后');
+                      goToOrderList(5);
                     },
                     child: Container(
                       child: new Center(

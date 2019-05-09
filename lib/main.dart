@@ -111,10 +111,19 @@ import 'package:flutterproject/page/index.dart';
 import 'package:flutterproject/page/login/index.dart';
 import 'package:flutterproject/page/register/index.dart';
 import 'package:flutterproject/page/personal/index.dart';
+import 'package:flutterproject/page/order/list.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => new MyAppState();
+}
+
+class MyAppState extends State<MyApp> {
+  bool isUserName = false;
+  String userName = '';
+
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -123,10 +132,11 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primaryColor: Colors.white,
         ),
-        routes: {
-          '/login': (_) => new LoginPage(),
-          '/register': (_) => new RegisterPage(),
-          '/mine': (_) => new PersonalPage(),
+        routes: <String, WidgetBuilder>{
+          '/login': (BuildContext context) => new LoginPage(),
+          '/register': (BuildContext context) => new RegisterPage(),
+          '/mine': (BuildContext context) => new PersonalPage(),
+          '/order_list': (BuildContext context) => new OrderListPage(),
         },
         home: HomePage());
   }
