@@ -43,4 +43,9 @@ class ApiInterface {
   static getVipBanner() async {
     return Http.request('/vip_banner_list', 'get');
   }
+
+  // userList
+  static getUserList([int page]) async {
+    return Http.request('/personal', 'get');
+  }
 }

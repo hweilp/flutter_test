@@ -26,7 +26,8 @@ class PersonalPageState extends State<PersonalPage> {
   void getUserInfo() async {
     String sharedUserName = await Shared.sharedGetString('user_name');
     String sharedUserAvatar = await Shared.sharedGetString('user_avatar');
-    if (sharedUserName != null && sharedUserName != 'null') {
+    if (sharedUserName != 'null') {
+      // if (sharedUserName != null && sharedUserName != 'null') {
       setState(() {
         userName = sharedUserName;
         userAvatar = sharedUserAvatar;

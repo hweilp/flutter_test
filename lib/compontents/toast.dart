@@ -9,7 +9,7 @@ class Toast {
   // [] dart可选参数
   static void toast(BuildContext context, String msg,
       [int _duration = 2000, Color _color = Colors.black26]) async {
-    assert(msg != null);
+    // assert(msg != null);
     _msg = msg;
     _startedTime = DateTime.now();
     //获取OverlayState

@@ -28,14 +28,23 @@ class VIPPageState extends State<VIPPage> {
     var code = data['code'];
     if (code == 2000) {
       var dataList = data['data']['list'];
+
       dataList.forEach((item) {
-        imageList.add(Image.network(item['url'], fit: BoxFit.fill));
+        setState(() {
+          imageList.add(Image.network(item['url'], fit: BoxFit.fill));
+        });
       });
     }
   }
 
   Widget _swiperBuilder(BuildContext context, int index) {
-    return (imageList[index]);
+    int length = imageList.length;
+    if (length > 0) {
+      return (imageList[index]);
+    } else {
+      return new Image.network('http://127.0.0.1:8080/static/images/vip2.jpg',
+          fit: BoxFit.fill);
+    }
   }
 
   @override
